@@ -1,9 +1,1 @@
-{
-    "workshopName": "From main branch - Don't delete",
-    "question": "What are three most important problems to be addressed by inclusive design?",
-    "entries": 3,
-    "entryMaxLength": 80,
-    "createdTimestamp": "2021-05-05T18:03:02.752Z",
-    "lastModifiedTimestamp": "2021-05-05T18:03:02.752Z",
-    "branch": "main"
-}
+{"workshopName":"","question":"","entries":0,"entryMaxLength":80,"createdTimestamp":"2021-10-04T13:27:15.375Z","lastModifiedTimestamp":"2021-10-04T13:27:15.375Z","branch":"ee69cd4a-0537-4d0a-a3ed-6b69095f999e"}
