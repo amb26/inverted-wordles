@@ -11,26 +11,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 inverted_wordles.manage.setLoginState = function (isLoggedIn, options) {
-    const deployStatusElements = document.querySelectorAll("input[name='" + options.deployStatusField + "']");
-    for (let i = 0; i < deployStatusElements.length; i++) {
-        const currentDeployStatus = deployStatusElements[i].value;
-        const enabled = isLoggedIn && currentDeployStatus === options.deployStatus.ready;
+    const wordlesArea = document.querySelector(options.selectors.wordlesArea);
 
-        // For wordles that have been deployed, enable their input fields and delete button. Otherwise, disable them.
-        const parentContainer = deployStatusElements[i].parentElement;
-        const inputElements = parentContainer.getElementsByTagName("input");
-        for (let i = 0; i < inputElements.length; i++) {
-            if (options.inputFieldNames.includes(inputElements[i].getAttribute("name"))) {
-                if (enabled) {
-                    inputElements[i].removeAttribute("disabled");
-                } else {
-                    inputElements[i].setAttribute("disabled", "disabled");
-                }
-            }
-        }
+    // Enable/Disable input text fields
+    const inputElements = wordlesArea.querySelectorAll("input");
+    inputElements.forEach(inputElm => options.inputFieldNames.includes(inputElm.getAttribute("name")) && isLoggedIn ?
+        inputElm.removeAttribute("disabled") :
+        inputElm.setAttribute("disabled", "disabled")
+    );
 
-        parentContainer.querySelector(options.selectors.deleteButton).disabled = enabled ? false : true;
-    }
+    // Enable/Disable delete buttons
+    const delButtons = wordlesArea.querySelectorAll(options.selectors.deleteButton);
+    delButtons.forEach(delButton => delButton.disabled = !isLoggedIn);
 
     // Show or hide create new question button
     document.querySelector(options.selectors.createButton).style.display = isLoggedIn ? "block" : "none";

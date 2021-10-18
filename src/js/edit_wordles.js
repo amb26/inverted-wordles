@@ -23,7 +23,7 @@ inverted_wordles.manage.bindInputFieldEvents = function (containerElm, options) 
                 // Set the data to be saved
                 let dataTogo = {};
                 dataTogo[evt.target.name] = evt.target.value;
-                dataTogo.branch = parentContainer.querySelector("[name=\"" + options.branchNameField + "\"]").value;
+                dataTogo.wordleId = parentContainer.querySelector("[name=\"" + options.wordleIdField + "\"]").value;
 
                 fetch("/api/save_question", {
                     method: "POST",
@@ -38,13 +38,13 @@ inverted_wordles.manage.bindInputFieldEvents = function (containerElm, options) 
                         // See https://github.com/whatwg/fetch/issues/18
                         if (response.status >= 400 && response.status < 600) {
                             response.json().then(res => {
-                                inverted_wordles.manage.reportStatus("*FAILED: New edits FAILED. Error: " + res.error + "*", oneStatusElm, "error");
+                                inverted_wordles.manage.reportStatus("*FAILED: New edits FAILED. Error: " + res.error.message + "*", oneStatusElm, "error");
                             });
                         } else {
                             response.json().then(res => {
                                 // Find the last modified element and set the new timestamp
                                 const lastModifiedElm = currentInput.parentElement.parentElement.querySelector("[id^=\"" + options.lastModifiedIdPrefix + "\"]");
-                                lastModifiedElm.textContent = res.lastModifiedTimestamp.substring(0, 10).replace(/-/g, "/");
+                                lastModifiedElm.textContent = inverted_wordles.manage.formatDate(res.lastModifiedTimestamp);
                                 // Report the success status
                                 inverted_wordles.manage.reportStatus("*New edits SUCCESSFUL*", oneStatusElm, "success");
                             });
